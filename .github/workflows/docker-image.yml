@@ -26,7 +26,8 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
     - name: Build the Docker image
-      run: docker build --no-cache --tag ${{ secrets.DOCKER_USER }}/hangman:latest .
+      run: docker build --file ./Dockerfile --tag ${{ secrets.DOCKER_USER }}/hangman:latest .
+
 
     - name: Push the Docker image
       run: docker push ${{ secrets.DOCKER_USER }}/hangman:latest
