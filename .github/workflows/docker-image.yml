@@ -21,8 +21,10 @@ jobs:
       run: |
         docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
 
+    - name: Move to the correct directory
+      run: cd ./hangman_web
     - name: Build the Docker image
-      run: docker build -f ./hangman_web/Dockerfile --tag ${{secrets.DOCKER_USER}}/hangman:latest .
+      run: docker build --tag ${{secrets.DOCKER_USER}}/hangman:latest .
 
     - name: docker push
       run: docker push ${{secrets.DOCKER_USER}}/hangman:latest
