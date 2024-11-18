@@ -7,28 +7,28 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: docker login
+
+    - name: Debug current directory
+      run: pwd
+    - name: List files
+      run: ls -al
+
+    - name: Docker login
       env:
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
-    - name: Debug file paths
-      run: ls -R
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-    - name: Move to the correct directory
-      run: cd ./hangman_web
     - name: Build the Docker image
-      run: docker build --tag ${{secrets.DOCKER_USER}}/hangman:latest .
+      run: docker build --tag ${{ secrets.DOCKER_USER }}/hangman:latest .
 
-    - name: docker push
-      run: docker push ${{secrets.DOCKER_USER}}/hangman:latest
+    - name: Push the Docker image
+      run: docker push ${{ secrets.DOCKER_USER }}/hangman:latest
 
 
